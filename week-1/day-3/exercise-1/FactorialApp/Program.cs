@@ -15,6 +15,10 @@ namespace FactorialApp
 
         public static long CalculateFactorial(int number)
         {
+            if (number < 0)
+            {
+                throw new ArgumentException();
+            }
             long factorial = 1;
             for(int i = 2; i<= number; i++)
             {
