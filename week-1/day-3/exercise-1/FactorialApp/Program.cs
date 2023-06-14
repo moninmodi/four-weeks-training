@@ -1,4 +1,5 @@
-﻿namespace FactorialApp
+﻿using System;
+namespace FactorialApp
 {
     public class Program
     {
@@ -14,7 +15,12 @@
 
         public static long CalculateFactorial(int number)
         {
-            throw new NotImplementedException();
+            long factorial = 1;
+            for(int i = 2; i<= number; i++)
+            {
+                factorial *= i;
+            }
+            return factorial;
         }
     }
 }
