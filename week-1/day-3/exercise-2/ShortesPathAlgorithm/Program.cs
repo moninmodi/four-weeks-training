@@ -219,11 +219,11 @@
 
             for (int i = 0; i < vertices; i++)
             {
-                distances[i] = int.MaxValue;
+                distances[i] = int.MaxValue / 2;
                 visited[i] = false;
             }
 
-            distances[source] = int.MinValue;
+            distances[source] = 0;
 
             for (int count = 0; count < vertices - 1; count++)
             {
