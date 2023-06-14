@@ -14,7 +14,15 @@
         // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/yield
         public static IEnumerable<int> FibonacciSequence()
         {
-            throw new NotImplementedException();
+            int current = 0;
+            int next = 1;
+            while (true)
+            {
+                yield return current;
+                int temp = current;
+                current = next;
+                next = temp + next;
+            }
         }
     }
 }
