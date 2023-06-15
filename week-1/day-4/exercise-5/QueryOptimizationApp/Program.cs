@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 namespace QueryOptimizationApp
 {
@@ -6,32 +9,34 @@ namespace QueryOptimizationApp
     {
         static void Main(string[] args)
         {
-            List<int> data = GenerateRandomNumbers(10000000);
+            IEnumerable<int> data = GenerateRandomNumbers(10000000);
             Stopwatch sw = Stopwatch.StartNew();
-            // Current implementation
-            var originalQuery = data.Where(x => x > 100).OrderByDescending(x => x).Take(10);
+
+            // Original query
+            var originalQuery = data.AsParallel()
+                                    .Where(x => x > 100)
+                                    .OrderByDescending(x => x)
+                                    .Take(10)
+                                    .ToList();
             sw.Stop();
             Console.WriteLine("Original Query: {0} ms", sw.ElapsedMilliseconds);
 
-            // Optimized implementation
+            // Optimized query
             sw.Restart();
-            
+            // Add your optimized query here
+
             sw.Stop();
             Console.WriteLine("Optimized Query: {0} ms", sw.ElapsedMilliseconds);
         }
 
-        static List<int> GenerateRandomNumbers(int count)
+        static IEnumerable<int> GenerateRandomNumbers(int count)
         {
             Random random = new Random();
-            List<int> numbers = new List<int>();
-
             for (int i = 0; i < count; i++)
             {
                 int randomNumber = random.Next();
-                numbers.Add(randomNumber);
+                yield return randomNumber;
             }
-
-            return numbers;
         }
     }
 }
