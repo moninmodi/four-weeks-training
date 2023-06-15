@@ -1,4 +1,6 @@
-﻿namespace LinqToXmlApp
+﻿using System.Xml.Linq;
+
+namespace LinqToXmlApp
 {
     internal class Program
     {
@@ -37,7 +39,18 @@
             // Write the title of all books to the console
 
             // Write the title of all books with genre "Genre 1" to the console
-
+            XDocument doc = XDocument.Parse(xmlString);
+            XElement newBook = new XElement("Book", new XElement("Title", "Book Title 4"), new XElement("Author", "Author 4"), new XElement("Genre", "Genre 4"));
+            doc.Root.Add(newBook);
+            string modifiedString = doc.ToString();
+            Console.WriteLine(modifiedString);
+            var update = doc.Descendants("Book").Where(e => (string)e.Element("Title") == "Book Title 2").ToList();
+            foreach( var e in update )
+            {
+                e.Element("Title").Value = "Harry Potter";
+            }
+            String x = doc.ToString();
+            Console.WriteLine(x);
         }
     }
 }
