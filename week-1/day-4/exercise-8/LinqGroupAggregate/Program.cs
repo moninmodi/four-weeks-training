@@ -20,6 +20,38 @@
             // 2. Count the number of products in each category
             // 3. Calculate the total price of products in each category
             // 4. Find the most expensive product in each category
+            var gcategory = products.GroupBy(p => p.Category).ToList();
+            foreach (var product in gcategory)
+            {
+                Console.WriteLine($"Category: {product.Key}");
+                foreach (var item in product)
+                {
+                    Console.WriteLine($"- {item.Name}");
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine("Number of products in each category.");
+            foreach(var product in gcategory)
+            {
+                Console.WriteLine($"Category: {product.Key}");
+                Console.WriteLine($"Number of Products - {product.Count()}");
+                foreach(var item in product)
+                {
+                    Console.WriteLine($"- {item.Name}");
+                }
+                Console.WriteLine();
+            }
+            foreach(var product in gcategory)
+            {
+                Console.WriteLine($"Category: {product.Key}");
+                Console.WriteLine($"Total price of products in each category - {product.Sum(p=>p.Price):C2}");
+                Console.WriteLine($"Max price item in each category - {product.Max(p => p.Price)}");
+                foreach(var item in product)
+                {
+                    Console.WriteLine($"-{item.Name}");
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
