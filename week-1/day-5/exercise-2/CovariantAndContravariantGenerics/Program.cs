@@ -1,32 +1,42 @@
-﻿namespace CovariantAndContravariantGenerics
+﻿using System;
+
+public interface IProcessor<in TInput, out TResult>
 {
-    interface IProcessor<in TInput, out TResult>
-    {
-        TResult Process(TInput input);
-    }
+    TResult Process(TInput input);
+}
 
-    class StringToIntProcessor : IProcessor<string, int>
+public class StringToIntProcessor : IProcessor<string, int>
+{
+    public int Process(string input)
     {
-        // Implement Process method
-        public int Process(string input)
-        {
-            throw new NotImplementedException();
-        }
+        return input.Length;
     }
+}
 
-    class DoubleToStringProcessor : IProcessor<double, string>
+public class DoubleToStringProcessor : IProcessor<double, string>
+{
+    public string Process(double input)
     {
-        // Implement Process method
-        public string Process(double input)
-        {
-            throw new NotImplementedException();
-        }
+        return input.ToString();
     }
-    internal class Program
+}
+
+public class Program
+{
+    static void Main()
     {
-        static void Main(string[] args)
-        {
-            // Demonstrate covariance and contravariance with IProcessor interface
-        }
+        IProcessor<string, object> stringProcessor = new StringToIntProcessor();
+        string inputString = "Hello, World!";
+        object result = stringProcessor.Process(inputString);
+        Console.WriteLine($"Input: {inputString}");
+        Console.WriteLine($"Output: {result}");
+
+        Console.WriteLine();
+
+        IProcessor<object, string> doubleProcessor = new DoubleToStringProcessor();
+        double inputDouble = 3.14159;
+        string output = doubleProcessor.Process(inputDouble);
+        Console.WriteLine($"Input: {inputDouble}");
+        Console.WriteLine($"Output: {output}");
     }
 }
